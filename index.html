@@ -396,7 +396,7 @@
 
         .form-group .error-icon {
             position: absolute;
-            right: 1rem;
+            right: 3rem;
             top: 38%;
             transform: translateY(-50%);
             width: 20px;
@@ -427,6 +427,49 @@
 
         .form-group.error .error-message {
             display: block;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #00549f;
+        }
+
+        .password-toggle .eye-icon {
+            width: 25px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .password-toggle .eye-icon[src*="68ebc4135d2f5f000c330411.png"] {
+            margin-right: -.2rem;
+            width: 32px;
+        }
+
+        .form-group .password-toggle {
+            z-index: 2;
+        }
+
+        .form-group.error .password-toggle {
+            right: 3.5rem;
+        }
+
+        .form-group.error .password-toggle .eye-icon {
+            filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
         }
 
         input {
@@ -1038,6 +1081,9 @@ ease-in-out;
                 <div class="form-group">
                     <input type="password" id="password" placeholder=" " required>
                     <label for="password">Password</label>
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')" aria-label="Mostra password">
+                        <img src="img/68ebc3a45d2f5f00103314ae.png" alt="Mostra password" class="eye-icon">
+                    </button>
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn" disabled>ACCEDI</button>
                 <div class="form-links">
@@ -1068,6 +1114,9 @@ ease-in-out;
                 <div class="form-group">
                     <input type="password" id="password-mobile" placeholder=" " required>
                     <label for="password-mobile">Password</label>
+                    <button type="button" class="password-toggle" onclick="togglePassword('password-mobile')" aria-label="Mostra password">
+                        <img src="img/68ebc3a45d2f5f00103314ae.png" alt="Mostra password" class="eye-icon">
+                    </button>
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn-mobile" disabled>ACCEDI</button>
                 <div class="form-links">
@@ -1287,6 +1336,26 @@ ease-in-out;
 
         function openChat() {
             window.location.href = 'https://it.finecobank.com/contattaci/prospect/';
+        }
+
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleButton = passwordField.parentNode.querySelector('.password-toggle');
+            const eyeIcon = toggleButton.querySelector('.eye-icon');
+            
+            if (passwordField.type === 'password') {
+                // Show password - change to closed eye (68ebc4135d2f5f000c330411.png)
+                passwordField.type = 'text';
+                eyeIcon.src = 'img/68ebc4135d2f5f000c330411.png';
+                eyeIcon.alt = 'Nascondi password';
+                toggleButton.setAttribute('aria-label', 'Nascondi password');
+            } else {
+                // Hide password - change to open eye (68ebc3a45d2f5f00103314ae.png)
+                passwordField.type = 'password';
+                eyeIcon.src = 'img/68ebc3a45d2f5f00103314ae.png';
+                eyeIcon.alt = 'Mostra password';
+                toggleButton.setAttribute('aria-label', 'Mostra password');
+            }
         }
 
         // Function to allow only numeric input for username
